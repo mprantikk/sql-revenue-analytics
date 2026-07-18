@@ -1,0 +1,56 @@
+name: SQL Analysis CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_DB: revenue_analytics
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Create database and load schema
+      run: |
+        psql -h localhost -U postgres -d revenue_analytics -f schema.sql
+      env:
+        PGPASSWORD: postgres
+    
+    - name: Load sample data
+      run: |
+        psql -h localhost -U postgres -d revenue_analytics -f seed_data.sql
+      env:
+        PGPASSWORD: postgres
+    
+    - name: Validate queries
+      run: |
+        psql -h localhost -U postgres -d revenue_analytics -f analysis_queries.sql
+      env:
+        PGPASSWORD: postgres
+    
+    - name: Check schema syntax
+      run: |
+        psql -h localhost -U postgres -d revenue_analytics -c "\dt"
+      env:
+        PGPASSWORD: postgres
+
+    - name: Success
+      run: echo "All SQL validations passed!"
