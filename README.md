@@ -275,7 +275,7 @@ Connect on LinkedIn: https://linkedin.com/in/mprantikk
 
 ---
 
-## 📝 Resume Bullet Point
+## 🚀 Key Metric & Impact (Quick Summary)
 
 Use this to describe the project in your resume:
 
