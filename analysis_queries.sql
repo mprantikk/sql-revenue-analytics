@@ -5,12 +5,15 @@
 
 -- ------------------------------------------------
 -- 1. Monthly Revenue Trend
+--    Net revenue: completed orders only (refunded and cancelled excluded)
 -- ------------------------------------------------
 SELECT
     DATE_TRUNC('month', p.payment_date)::date AS month,
     COUNT(DISTINCT p.order_id)                AS orders,
     ROUND(SUM(p.amount), 2)                   AS revenue
 FROM payments p
+JOIN orders o ON o.order_id = p.order_id
+WHERE o.status = 'completed'
 GROUP BY 1
 ORDER BY 1;
 
@@ -126,6 +129,8 @@ WITH monthly AS (
         DATE_TRUNC('month', p.payment_date)::date AS month,
         SUM(p.amount) / COUNT(DISTINCT p.order_id) AS aov
     FROM payments p
+    JOIN orders o ON o.order_id = p.order_id
+    WHERE o.status = 'completed'
     GROUP BY 1
 )
 SELECT
