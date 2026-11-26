@@ -4,14 +4,13 @@ Findings from running `analysis_queries.sql` against the seeded dataset (120 cus
 356 orders, Jan 2023–Dec 2024).
 
 ## 1. Revenue Trend
-- **Total revenue:** ~$116,800 across 341 completed payments
-- Revenue in the second half of the observed period was **~26% higher** than the first half,
-  showing steady month-over-month growth rather than a one-off spike
+- **Net revenue:** $107,948 across 315 completed orders (26 refunded orders, $8,854, excluded)
+- 2024 revenue was **~27% higher** than 2023, showing steady growth rather than a one-off spike
 - Monthly revenue ranged from ~$150 in the first month (small customer base) up to $2,000–$4,000+
   per month as the customer base matured
 
 ## 2. Customer Segmentation (RFM)
-- Of 114 customers with completed purchases, the **top 20% (22 customers) generated ~41% of total revenue**
+- Of 114 customers with completed purchases, the **top 20% (23 customers) generated ~44% of total revenue**
 - This is a classic Pareto-adjacent pattern — it flags retention/loyalty programs for the top RFM
   tier as likely higher ROI than broad-based acquisition spend
 
@@ -33,7 +32,7 @@ Findings from running `analysis_queries.sql` against the seeded dataset (120 cus
 
 ## Takeaway
 
-Even on a synthetic dataset, this mirrors a pattern I see in real operational data: **a small share of
+Even on a synthetic dataset, this mirrors a pattern common in real operational data: **a small share of
 customers drives a disproportionate share of revenue**, and **early retention is the biggest lever**
 for lifetime value. In a live business setting, next steps would be to segment marketing spend by RFM
 tier and set up automated month-1 retention triggers.
